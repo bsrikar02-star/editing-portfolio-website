@@ -1056,8 +1056,6 @@ function Portfolio() {
               </ShowcaseNav>
             </ShowcaseStage>
 
-            <ShowcaseTitleBelow>{videos[activeIdx].label}</ShowcaseTitleBelow>
-
             <Filmstrip>
               {videos.map((video, i) => (
                 <FilmThumb
