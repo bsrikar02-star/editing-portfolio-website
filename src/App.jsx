@@ -861,17 +861,12 @@ const FooterLinks = styled("nav", {
 });
 
 const marqueeItems = [
-  "Looking for Projects",
-  "Cinematic Reels",
-  "Brand Films",
-  "Social Crush",
-  "Color Cuts",
-  "Short Form",
-  "YouTube Edits",
-  "Music Videos",
-  "Commercial Cuts",
-  "Trailer Edits",
-  "Motion Rhythm",
+  "Student-Led Company",
+  "Extreme Creative Output",
+  "Passionate Storytellers",
+  "Student-Led Company",
+  "Extreme Creative Output",
+  "Passionate Storytellers",
 ];
 
 const videos = [
