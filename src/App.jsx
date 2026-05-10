@@ -266,10 +266,9 @@ const TitleGhost = styled("span", {
   textTransform: "uppercase",
   letterSpacing: "0.015em",
   color: "transparent",
-  WebkitTextStroke: "2.5px rgba(255,255,255,0.4)",
-  filter: "blur(12px)",
-  transform: "translate(0, 0)",
-  opacity: 0.8,
+  WebkitTextStroke: "1.4px rgba(255,255,255,0.34)",
+  transform: "translate(7px, 8px)",
+  opacity: 0.9,
 });
 
 const Title = styled("h1", {
@@ -281,10 +280,10 @@ const Title = styled("h1", {
   lineHeight: 0.76,
   letterSpacing: "0.015em",
   textTransform: "none",
-  color: "rgba(255,255,255,0.05)",
-  WebkitTextStroke: "2.2px #ffffff",
-  filter: "drop-shadow(0 0 20px rgba(255,255,255,0.7)) drop-shadow(0 0 40px rgba(255,255,255,0.3))",
-  textShadow: "0 0 10px rgba(255,255,255,0.5)",
+  color: "rgba(255,255,255,0.08)",
+  WebkitTextStroke: "2px rgba(255,255,255,0.92)",
+  textShadow:
+    "1px 0 0 rgba(255,255,255,0.5), -1px 0 0 rgba(80,80,80,0.7), 0 0 34px rgba(255,255,255,0.2), 0 0 70px rgba(0,0,0,0.85)",
 
   "&::after": {
     content: "ADy",
@@ -300,7 +299,7 @@ const Title = styled("h1", {
 const Tagline = styled("p", {
   position: "relative",
   zIndex: 1,
-  margin: "clamp(22px, 4vh, 36px) 0 0",
+  margin: "-18px 0 0",
   fontFamily: "$serif",
   fontStyle: "italic",
   fontSize: "clamp(1.5rem, 4vw, 3rem)",
@@ -467,11 +466,17 @@ const WorkTop = styled("div", {
 /* ── Full-bleed showcase ── */
 const ShowcaseWrap = styled("div", {
   position: "relative",
-  width: "100vw",
-  left: "50%",
-  right: "50%",
-  marginLeft: "-50vw",
-  marginRight: "-50vw",
+  width: "100%",
+});
+
+const ShowcaseTitleBelow = styled("h3", {
+  marginTop: 24,
+  fontFamily: "$serif",
+  fontSize: "clamp(1.5rem, 3vw, 2.5rem)",
+  fontWeight: 800,
+  color: "$text",
+  textAlign: "center",
+  textShadow: "0 4px 12px rgba(0,0,0,0.6)",
 });
 
 const ShowcaseStage = styled("div", {
@@ -1015,53 +1020,55 @@ function Portfolio() {
               <SectionTitle tone="gold">Curated Work.</SectionTitle>
             </div>
           </WorkTop>
+        <Inner>
+          <ShowcaseWrap 
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
+            <ShowcaseStage>
+              <video
+                ref={videoRef}
+                key={videos[activeIdx].src}
+                src={videos[activeIdx].src}
+                muted
+                loop
+                playsInline
+                autoPlay
+                controls
+              />
+              <ShowcaseVignette />
+              <ShowcaseOverlay />
+              <ShowcaseProgress style={{ width: `${progressWidth}%`, transition: isPaused ? 'none' : 'width 8000ms linear' }} />
+              <ShowcaseInfo>
+                <div /> {/* Spacer */}
+                <ShowcaseCounter>
+                  {String(activeIdx + 1).padStart(2, "0")} / {String(videos.length).padStart(2, "0")}
+                </ShowcaseCounter>
+              </ShowcaseInfo>
+              <ShowcaseNav side="left" onClick={() => goTo(activeIdx - 1)} aria-label="Previous">
+                <ChevronLeft aria-hidden="true" />
+              </ShowcaseNav>
+              <ShowcaseNav side="right" onClick={() => goTo(activeIdx + 1)} aria-label="Next">
+                <ChevronRight aria-hidden="true" />
+              </ShowcaseNav>
+            </ShowcaseStage>
+
+            <ShowcaseTitleBelow>{videos[activeIdx].label}</ShowcaseTitleBelow>
+
+            <Filmstrip>
+              {videos.map((video, i) => (
+                <FilmThumb
+                  key={video.src}
+                  className={i === activeIdx ? "active" : ""}
+                  onClick={() => goTo(i)}
+                  aria-label={video.label}
+                >
+                  <video src={video.src} muted preload="metadata" />
+                </FilmThumb>
+              ))}
+            </Filmstrip>
+          </ShowcaseWrap>
         </Inner>
-
-        <ShowcaseWrap 
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          <ShowcaseStage>
-            <video
-              ref={videoRef}
-              key={videos[activeIdx].src}
-              src={videos[activeIdx].src}
-              muted
-              loop
-              playsInline
-              autoPlay
-              controls
-            />
-            <ShowcaseVignette />
-            <ShowcaseOverlay />
-            <ShowcaseProgress style={{ width: `${progressWidth}%`, transition: isPaused ? 'none' : 'width 8000ms linear' }} />
-            <ShowcaseInfo>
-              <div /> {/* Spacer */}
-              <ShowcaseCounter>
-                {String(activeIdx + 1).padStart(2, "0")} / {String(videos.length).padStart(2, "0")}
-              </ShowcaseCounter>
-            </ShowcaseInfo>
-            <ShowcaseNav side="left" onClick={() => goTo(activeIdx - 1)} aria-label="Previous">
-              <ChevronLeft aria-hidden="true" />
-            </ShowcaseNav>
-            <ShowcaseNav side="right" onClick={() => goTo(activeIdx + 1)} aria-label="Next">
-              <ChevronRight aria-hidden="true" />
-            </ShowcaseNav>
-          </ShowcaseStage>
-
-          <Filmstrip>
-            {videos.map((video, i) => (
-              <FilmThumb
-                key={video.src}
-                className={i === activeIdx ? "active" : ""}
-                onClick={() => goTo(i)}
-                aria-label={video.label}
-              >
-                <video src={video.src} muted preload="metadata" />
-              </FilmThumb>
-            ))}
-          </Filmstrip>
-        </ShowcaseWrap>
       </WorkSection>
 
       <ContactSection id="contact">
