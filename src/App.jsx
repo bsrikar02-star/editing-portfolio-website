@@ -1020,7 +1020,6 @@ function Portfolio() {
               <SectionTitle tone="gold">Curated Work.</SectionTitle>
             </div>
           </WorkTop>
-        <Inner>
           <ShowcaseWrap 
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
