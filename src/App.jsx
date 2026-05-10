@@ -196,6 +196,9 @@ const HeroFrame = styled("div", {
   padding: "clamp(82px, 14vh, 152px) 0 clamp(94px, 12vh, 150px)",
   position: "relative",
   zIndex: 1,
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
 
   "&::before": {
     content: "",
