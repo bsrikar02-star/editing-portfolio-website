@@ -254,20 +254,21 @@ const TitleWrap = styled("div", {
   zIndex: 1,
   display: "inline-grid",
   placeItems: "center",
-  filter: "drop-shadow(0 0 24px rgba(255,255,255,0.12))",
+  transform: "translateX(-2vw)", // Visually centers the logo to balance the 'y' tail
+  filter: "drop-shadow(0 0 40px rgba(255,255,255,0.4))",
 });
 
 const TitleGhost = styled("span", {
   gridArea: "1 / 1",
   fontFamily: "$serif",
-  fontSize: "clamp(7rem, 19vw, 15rem)",
+  fontSize: "clamp(8rem, 22vw, 18rem)",
   fontWeight: 900,
   lineHeight: 0.76,
   textTransform: "uppercase",
   letterSpacing: "0.015em",
   color: "transparent",
-  WebkitTextStroke: "1.4px rgba(255,255,255,0.34)",
-  transform: "translate(7px, 8px)",
+  WebkitTextStroke: "1.6px rgba(255,255,255,0.4)",
+  transform: "translate(8px, 9px)",
   opacity: 0.9,
 });
 
@@ -275,15 +276,15 @@ const Title = styled("h1", {
   gridArea: "1 / 1",
   margin: 0,
   fontFamily: "$serif",
-  fontSize: "clamp(7rem, 19vw, 15rem)",
+  fontSize: "clamp(8rem, 22vw, 18rem)",
   fontWeight: 900,
   lineHeight: 0.76,
   letterSpacing: "0.015em",
   textTransform: "none",
   color: "rgba(255,255,255,0.08)",
-  WebkitTextStroke: "2px rgba(255,255,255,0.92)",
+  WebkitTextStroke: "2.4px rgba(255,255,255,0.95)",
   textShadow:
-    "1px 0 0 rgba(255,255,255,0.5), -1px 0 0 rgba(80,80,80,0.7), 0 0 34px rgba(255,255,255,0.2), 0 0 70px rgba(0,0,0,0.85)",
+    "1px 0 0 rgba(255,255,255,0.6), -1px 0 0 rgba(80,80,80,0.8), 0 0 40px rgba(255,255,255,0.4), 0 0 90px rgba(255,255,255,0.25), 0 0 120px rgba(0,0,0,0.9)",
 
   "&::after": {
     content: "ADy",
