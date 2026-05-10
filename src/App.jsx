@@ -403,6 +403,13 @@ const CategoryRail = styled("div", {
   backdropFilter: "blur(16px)",
 });
 
+const BottomCategoryRail = styled(CategoryRail, {
+  top: "auto",
+  bottom: 0,
+  borderTop: "1px solid rgba(255,255,255,0.12)",
+  borderBottom: "none",
+});
+
 const CategoryTrack = styled("div", {
   display: "flex",
   minWidth: "max-content",
@@ -665,8 +672,8 @@ const ThumbLabel = styled("span", {
   border: "1px solid rgba(255,255,255,0.15)",
   transition: "all 300ms ease",
   whiteSpace: "nowrap",
-  ".active &": { 
-    background: "$gold", 
+  ".active &": {
+    background: "$gold",
     color: "$black",
     borderColor: "$gold",
     boxShadow: "0 0 15px rgba(245,197,66,0.4)",
@@ -861,6 +868,20 @@ const FooterLinks = styled("nav", {
 });
 
 const marqueeItems = [
+  "Looking for Projects",
+  "Cinematic Reels",
+  "Brand Films",
+  "Social Crush",
+  "Color Cuts",
+  "Short Form",
+  "YouTube Edits",
+  "Music Videos",
+  "Commercial Cuts",
+  "Trailer Edits",
+  "Motion Rhythm",
+];
+
+const bottomMarqueeItems = [
   "Student-Led Company",
   "Extreme Creative Output",
   "Passionate Storytellers",
@@ -967,9 +988,9 @@ function Portfolio() {
   // Autoplay on switch
   useEffect(() => {
     const v = videoRef.current;
-    if (v) { 
-      v.currentTime = 0; 
-      v.play().catch(() => undefined); 
+    if (v) {
+      v.currentTime = 0;
+      v.play().catch(() => undefined);
     }
   }, [activeIdx]);
 
@@ -1009,6 +1030,14 @@ function Portfolio() {
             ))}
           </CategoryTrack>
         </CategoryRail>
+
+        <BottomCategoryRail aria-hidden="true">
+          <CategoryTrack>
+            {[...bottomMarqueeItems, ...bottomMarqueeItems].map((item, index) => (
+              <span key={`${item}-${index}`}>{item}</span>
+            ))}
+          </CategoryTrack>
+        </BottomCategoryRail>
       </Hero>
 
       <WorkSection id="work">
@@ -1019,7 +1048,7 @@ function Portfolio() {
               <SectionTitle tone="gold">Curated Work.</SectionTitle>
             </div>
           </WorkTop>
-          <ShowcaseWrap 
+          <ShowcaseWrap
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
           >
