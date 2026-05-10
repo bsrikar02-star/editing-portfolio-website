@@ -1,0 +1,23 @@
+{
+  "name": "srikarfolio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --base ./",
+    "build": "vite build --base=./",
+    "preview": "vite preview --host 127.0.0.1",
+    "serve": "node scripts/serve-dist.mjs",
+    "stitch:generate": "node scripts/stitch-generate.mjs"
+  },
+  "dependencies": {
+    "@google/stitch-sdk": "^0.1.0",
+    "@stitches/react": "^1.2.8",
+    "@vitejs/plugin-react": "^5.1.1",
+    "vite": "^7.2.7",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "lucide-react": "^0.562.0"
+  },
+  "devDependencies": {}
+}
