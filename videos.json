@@ -1,0 +1,44 @@
+[
+  {
+    "id": "003",
+    "src": "/assets/videos/03-real-estate.mp4",
+    "label": "Real Estate Edit",
+    "thumbnail": "/assets/thumbnails/thumb-003.jpg",
+    "addedAt": "2026-05-10T00:00:00.000Z"
+  },
+  {
+    "id": "001",
+    "src": "/assets/videos/01-football-mogtr-reel.mp4",
+    "label": "Football Mogrt Reel",
+    "thumbnail": "/assets/thumbnails/thumb-001.jpg",
+    "addedAt": "2026-05-10T00:00:00.000Z"
+  },
+  {
+    "id": "1778507962157",
+    "src": "/assets/videos/1778507961940-outpu-final-1.mp4",
+    "label": "outpu-final-1.mp4",
+    "thumbnail": "/assets/thumbnails/thumb-1778507962157.jpg",
+    "addedAt": "2026-05-11T13:59:22.157Z"
+  },
+  {
+    "id": "002",
+    "src": "/assets/videos/02-spotify-ai-saas.mp4",
+    "label": "Spotify AI SaaS",
+    "thumbnail": "/assets/thumbnails/thumb-002.jpg",
+    "addedAt": "2026-05-10T00:00:00.000Z"
+  },
+  {
+    "id": "005",
+    "src": "/assets/videos/05-spiderman-edit.mp4",
+    "label": "Spiderman Edit",
+    "thumbnail": null,
+    "addedAt": "2026-05-10T00:00:00.000Z"
+  },
+  {
+    "id": "004",
+    "src": "/assets/videos/04-batman-edit.mp4",
+    "label": "Batman Edit",
+    "thumbnail": null,
+    "addedAt": "2026-05-10T00:00:00.000Z"
+  }
+]

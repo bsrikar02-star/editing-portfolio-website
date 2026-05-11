@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { createRoot } from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { createStitches, keyframes } from "@stitches/react";
 import {
   ArrowRight,
@@ -12,6 +13,7 @@ import {
   Play,
 } from "lucide-react";
 import "./base.css";
+import AdminApp from "./admin/AdminApp";
 
 const { styled, globalCss } = createStitches({
   theme: {
@@ -257,8 +259,8 @@ const TitleWrap = styled("div", {
   zIndex: 1,
   display: "inline-grid",
   placeItems: "center",
-  transform: "translateX(-2vw)", // Visually centers the logo to balance the 'y' tail
-  filter: "drop-shadow(0 0 40px rgba(255,255,255,0.4))",
+  transform: "translateX(-2vw)",
+  filter: "drop-shadow(0 0 40px rgba(245,197,66,0.55))",
 });
 
 const TitleGhost = styled("span", {
@@ -270,7 +272,7 @@ const TitleGhost = styled("span", {
   textTransform: "uppercase",
   letterSpacing: "0.015em",
   color: "transparent",
-  WebkitTextStroke: "1.6px rgba(255,255,255,0.4)",
+  WebkitTextStroke: "1.6px rgba(245,197,66,0.45)",
   transform: "translate(8px, 9px)",
   opacity: 0.9,
 });
@@ -284,17 +286,17 @@ const Title = styled("h1", {
   lineHeight: 0.76,
   letterSpacing: "0.015em",
   textTransform: "none",
-  color: "rgba(255,255,255,0.08)",
-  WebkitTextStroke: "2.4px rgba(255,255,255,0.95)",
+  color: "rgba(245,197,66,0.1)",
+  WebkitTextStroke: "2.4px rgba(245,197,66,0.95)",
   textShadow:
-    "1px 0 0 rgba(255,255,255,0.6), -1px 0 0 rgba(80,80,80,0.8), 0 0 40px rgba(255,255,255,0.4), 0 0 90px rgba(255,255,255,0.25), 0 0 120px rgba(0,0,0,0.9)",
+    "1px 0 0 rgba(245,197,66,0.5), -1px 0 0 rgba(120,90,0,0.6), 0 0 40px rgba(245,197,66,0.45), 0 0 90px rgba(245,197,66,0.22), 0 0 120px rgba(0,0,0,0.9)",
 
   "&::after": {
     content: "ADy",
     position: "absolute",
     inset: 0,
     color: "transparent",
-    WebkitTextStroke: "1px rgba(255,255,255,0.18)",
+    WebkitTextStroke: "1px rgba(245,197,66,0.22)",
     transform: "translate(-3px, -3px)",
     pointerEvents: "none",
   },
@@ -309,8 +311,8 @@ const Tagline = styled("p", {
   fontSize: "clamp(1.5rem, 4vw, 3rem)",
   fontWeight: 800,
   lineHeight: 1,
-  color: "$gold",
-  textShadow: "0 0 28px rgba(245,197,66,0.24), 0 2px 0 rgba(0,0,0,0.7)",
+  color: "$text",
+  textShadow: "0 0 28px rgba(255,255,255,0.22), 0 2px 0 rgba(0,0,0,0.7)",
 });
 
 const Quote = styled("p", {
@@ -890,27 +892,12 @@ const bottomMarqueeItems = [
   "Passionate Storytellers",
 ];
 
-const videos = [
-  {
-    src: `${import.meta.env.BASE_URL}assets/videos/01-football-mogtr-reel.mp4`,
-    label: "Football Mogrt Reel",
-  },
-  {
-    src: `${import.meta.env.BASE_URL}assets/videos/02-spotify-ai-saas.mp4`,
-    label: "Spotify AI SaaS",
-  },
-  {
-    src: `${import.meta.env.BASE_URL}assets/videos/03-real-estate.mp4`,
-    label: "Real Estate Edit",
-  },
-  {
-    src: `${import.meta.env.BASE_URL}assets/videos/04-batman-edit.mp4`,
-    label: "Batman Edit",
-  },
-  {
-    src: `${import.meta.env.BASE_URL}assets/videos/05-spiderman-edit.mp4`,
-    label: "Spiderman Edit",
-  },
+const DEFAULT_VIDEOS = [
+  { id: "001", src: "/assets/videos/01-football-mogtr-reel.mp4", label: "Football Mogrt Reel", thumbnail: null },
+  { id: "002", src: "/assets/videos/02-spotify-ai-saas.mp4", label: "Spotify AI SaaS", thumbnail: null },
+  { id: "003", src: "/assets/videos/03-real-estate.mp4", label: "Real Estate Edit", thumbnail: null },
+  { id: "004", src: "/assets/videos/04-batman-edit.mp4", label: "Batman Edit", thumbnail: null },
+  { id: "005", src: "/assets/videos/05-spiderman-edit.mp4", label: "Spiderman Edit", thumbnail: null },
 ];
 
 const contactCards = [
@@ -950,10 +937,38 @@ const contactCards = [
 
 function Portfolio() {
   useGlobal();
+  const [videos, setVideos] = useState(DEFAULT_VIDEOS);
   const [activeIdx, setActiveIdx] = useState(0);
   const [progressWidth, setProgressWidth] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const videoRef = useRef(null);
+
+  // Fetch videos from admin API; fall back to defaults if API not running
+  useEffect(() => {
+    fetch("http://127.0.0.1:3001/api/videos")
+      .then((r) => r.json())
+      .then((data) => { if (Array.isArray(data) && data.length) setVideos(data); })
+      .catch(() => { /* API not running — use defaults */ });
+  }, []);
+
+  // Poll for updates every 5 s so admin changes appear without refresh
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetch("http://127.0.0.1:3001/api/videos")
+        .then((r) => r.json())
+        .then((data) => {
+          if (Array.isArray(data) && data.length) {
+            setVideos((prev) => {
+              const prevStr = JSON.stringify(prev.map((v) => v.id + v.thumbnail));
+              const nextStr = JSON.stringify(data.map((v) => v.id + v.thumbnail));
+              return prevStr === nextStr ? prev : data;
+            });
+          }
+        })
+        .catch(() => {});
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   const goTo = useCallback((idx) => {
     const next = ((idx % videos.length) + videos.length) % videos.length;
@@ -1083,12 +1098,14 @@ function Portfolio() {
             <Filmstrip>
               {videos.map((video, i) => (
                 <FilmThumb
-                  key={video.src}
+                  key={video.id || video.src}
                   className={i === activeIdx ? "active" : ""}
                   onClick={() => goTo(i)}
                   aria-label={video.label}
                 >
-                  <video src={video.src} muted preload="metadata" />
+                  {video.thumbnail
+                    ? <img src={video.thumbnail} alt={video.label} style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }} />
+                    : <video src={video.src} muted preload="metadata" />}
                 </FilmThumb>
               ))}
             </Filmstrip>
@@ -1141,4 +1158,11 @@ function Portfolio() {
   );
 }
 
-createRoot(document.getElementById("root")).render(<Portfolio />);
+createRoot(document.getElementById("root")).render(
+  <BrowserRouter>
+    <Routes>
+      <Route path="/admin" element={<AdminApp />} />
+      <Route path="/*" element={<Portfolio />} />
+    </Routes>
+  </BrowserRouter>
+);
