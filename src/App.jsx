@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { createStitches, keyframes } from "@stitches/react";
 import {
   ArrowRight,
@@ -869,6 +869,38 @@ const FooterLinks = styled("nav", {
   "& a:hover": { color: "$text" },
 });
 
+const AdminCornerBtn = styled(Link, {
+  position: "fixed",
+  top: 18,
+  left: 18,
+  zIndex: 9999,
+  display: "inline-flex",
+  alignItems: "center",
+  gap: 7,
+  padding: "7px 14px",
+  background: "rgba(10,10,10,0.72)",
+  border: "1px solid rgba(255,255,255,0.13)",
+  borderRadius: 8,
+  backdropFilter: "blur(14px)",
+  color: "rgba(255,255,255,0.46)",
+  fontSize: "0.68rem",
+  fontWeight: 700,
+  letterSpacing: "0.18em",
+  textTransform: "uppercase",
+  textDecoration: "none",
+  transition: "color 200ms, border-color 200ms, background 200ms",
+  "&::before": {
+    content: "'⚙'",
+    fontSize: "0.72rem",
+    opacity: 0.7,
+  },
+  "&:hover": {
+    color: "rgba(255,255,255,0.9)",
+    borderColor: "rgba(255,255,255,0.28)",
+    background: "rgba(20,20,20,0.88)",
+  },
+});
+
 const marqueeItems = [
   "Looking for Projects",
   "Cinematic Reels",
@@ -1011,6 +1043,7 @@ function Portfolio() {
 
   return (
     <AppShell>
+      <AdminCornerBtn to="/admin">Admin</AdminCornerBtn>
       <GridVeil />
       <NoiseVeil />
 
